@@ -1,12 +1,12 @@
 import { useContext, useRef, useState } from 'react';
 import style from './Todo.module.css';
-import { TodoContext } from '../App';
+import { TodoContext, TodoDispatchContext } from '../App';
 
 export default function Editor() {
   const [content, setContent] = useState('');
   const contentRef = useRef(null);
 
-  const { onCreate } = useContext(TodoContext);
+  const { onCreate } = useContext(TodoDispatchContext);
 
   const onHandleContent = (e) => {
     setContent(e.target.value);

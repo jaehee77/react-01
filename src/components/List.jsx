@@ -6,7 +6,7 @@ import { TodoContext } from '../App';
 export default function List() {
   const [search, setSearch] = useState('');
 
-  const { todos } = useContext(TodoContext);
+  const todos = useContext(TodoContext);
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
