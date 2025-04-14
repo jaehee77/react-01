@@ -1,4 +1,10 @@
-import { useReducer, useRef, useState } from 'react';
+import {
+  useReducer,
+  useRef,
+  useState,
+  useCallback,
+  createContext,
+} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Editor from './components/Editor';
@@ -41,6 +47,8 @@ function reducer(state, action) {
   }
 }
 
+export const TodoContext = createContext();
+
 function App() {
   // const [todos, setTodos] = useState(mockData);
 
@@ -48,7 +56,7 @@ function App() {
 
   const idRef = useRef(mockData.length);
 
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     dispatch({
       type: 'CREATE',
       data: {
@@ -58,28 +66,30 @@ function App() {
         date: new Date().getTime(),
       },
     });
-  };
+  }, []);
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: 'UPDATE',
       targetId,
     });
-  };
+  }, []);
 
-  const onDelete = (targetId) => {
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: 'DELETE',
       targetId,
     });
-  };
+  }, []);
 
   return (
     <>
       <div className={style.todo_wrap}>
         <Header />
-        <Editor onCreate={onCreate} />
-        <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+        <TodoContext.Provider value={{ todos, onCreate, onDelete, onUpdate }}>
+          <Editor />
+          <List />
+        </TodoContext.Provider>
       </div>
     </>
   );

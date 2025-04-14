@@ -1,8 +1,7 @@
+import { memo } from 'react';
 import style from './Todo.module.css';
 
-import React from 'react';
-
-export default function Header() {
+function Header() {
   return (
     <div className={style.header}>
       <h3>오늘은 📅</h3>
@@ -10,3 +9,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default memo(Header);

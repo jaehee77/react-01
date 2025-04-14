@@ -1,14 +1,9 @@
+import { memo, useContext } from 'react';
 import style from './Todo.module.css';
+import { TodoContext } from '../App';
 
-export default function TodoItem({
-  id,
-  isDone,
-  content,
-  date,
-  onUpdate,
-  onDelete,
-}) {
-  // const
+function TodoItem({ id, isDone, content, date }) {
+  const { onUpdate, onDelete } = useContext(TodoContext);
 
   const onChangeCheckbox = () => {
     onUpdate(id);
@@ -29,3 +24,14 @@ export default function TodoItem({
     </div>
   );
 }
+
+// export default memo(TodoItem, (prevProps, nextProps) => {
+//   if (prevProps.id !== nextProps.id) return false;
+//   if (prevProps.content !== nextProps.content) return false;
+//   if (prevProps.date !== nextProps.date) return false;
+//   if (prevProps.isDone !== nextProps.isDone) return false;
+
+//   return true;
+// });
+
+export default memo(TodoItem);
